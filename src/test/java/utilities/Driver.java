@@ -3,85 +3,128 @@ package utilities;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 import java.time.Duration;
-import java.util.List;
-import java.util.NoSuchElementException;
+
 
 public class Driver {
-    //create a driver instance
-    public static WebDriver driver;
-    public static int timeout = 5;
+    private Driver(){
+         /*
+        SINGLETON PATTERN (Tekli kullanım) için gizli const.'ı private yaptık
+         */
+    };
 
-    //What?=>It is just to create, initialize the driver instance.(Singleton driver)
-    //Why?=>We don't want to create and initialize the driver when we don't need
-    //We will create and initialize the driver when it is null
-    //We can use Driver class with different browser(chrome,firefox,headless)
-    private Driver() {
-        //we don't want to create another abject. Singleton pattern
-    }
 
-    //to initialize the driver we create a static method
+
+    static WebDriver driver;
+
+
+    /*
+        Driver'i her çağırdığımızda yeni bir pencere açmamasi için bir if bloğu ile bu işi çözdük.
+        if(driver == null) ile eğer driver'a değer atanmamış ise driver'a değerleri ata, tekrar driver
+        çağrıldığında driver da değer olduğu için direk driver'i return et. Dolayısıyla driver'ı ikinci kez
+        çağırdığımızda açık gördüğü browser da yani aynı sayfada belirtilen web sitene gider.
+         */
+
+
+
     public static WebDriver getDriver() {
-        //create the driver if and only if it is null
-        if (driver == null) {
+        if (driver == null ) {
             String browser = ConfigurationReader.getProperty("browser");
+
             if ("chrome".equals(browser)) {
                 driver = new ChromeDriver();
-            } else if ("firefox".equals(browser)) {
-                driver = new FirefoxDriver();
-            } else if ("ie".equals(browser)) {
-                driver = new InternetExplorerDriver();
-            } else if ("safari".equals(browser)) {
-                driver = new SafariDriver();
+
             } else if ("chrome-headless".equals(browser)) {
-            //    driver = new ChromeDriver(new ChromeOptions().setHeadless(true));
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--headless");
+                options.addArguments("--remote-allow-origins=*");
+                options.addArguments("--window-size=1920,1080");
+                driver = new ChromeDriver();
             }
+
+
+            driver.manage().window().maximize();
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         }
-   //    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
         return driver;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    public static WebDriver getDriver() {
+//        if (driver == null ) {                //eğer driver null ise yani başlatılmamışsa driveri başlat fakat başlatılmışsa yeniden yeni bir driver açma
+//            // hali hazıda açılmış olan driverdan devam et demiş olduk,
+//            //java da non-primitivlerin default değeri null dur --> hatırlatma !
+//
+//            switch (ConfigurationReader.getProperty("browser")){
+//                case "chrome":
+//                    driver = new ChromeDriver();
+//                    break;
+//                case "edge" :
+//                    driver = new EdgeDriver();
+//                    break;
+//                case  "safari" :
+//                    driver = new SafariDriver();
+//                    break;
+//                case  "firefox" :
+//                    driver = new FirefoxDriver();
+//                    break;
+//
+//                default:
+//                    driver = new ChromeDriver();
+//
+//            }
+//
+//
+//
+//            driver.manage().window().maximize();
+//            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+//        }
+//        return driver;
+//    }
+
+
+
+
+
     public static void closeDriver() {
-        if (driver != null) {//if the driver is pointing chrome
-            driver.quit();//quit the driver
-            driver = null;//set it back to null to make sure driver is null
-            // so I can initialize it again
-            //This is important especially you do cross browser testing(testing with
-            // multiple browser like chrome, firefox, ie etc.)
+        if (driver != null) {  //driver null a eşit değilse yani driver başlatılmışsa kapat , daha sonra tekrar driver ı null a eşitle
+            driver.close();
+            driver = null;
         }
+
+        /*
+            Driver'i direk kapatip tekrar bir sayfaya gitmek istersek hata alırız. Çünkü
+        Driver'in yeniden oluşma şartı değer atanmamış olması. Close yaptıktan sonra driver hala
+        değer atılı durumda gözükür dolayısıyla yeniden driver'ı oluşturabilmesi için yani getDriver()
+        methodundaki oluşma şartına uyabilmesi için driver'i tekrar null' a eşitlememiz yani
+        kapandıktan sonra boş olduğunu belirtmemiz gerekir
+         */
+
     }
 
-    //    Driver.selectByVisibleText(dropdown element, "CHECKING-91303-116.98$")
-    public static void selectByVisibleText(WebElement element, String text) {
-        Select objSelect = new Select(element);
-        objSelect.selectByVisibleText(text);
-    }
-    //    Parameter1 : WebElement
-//    Parameter2:  int
-//    Driver.selectByIndex(dropdown element, 1)
-    public static void selectByIndex(WebElement element, int index) {
-        Select objSelect = new Select(element);
-        objSelect.selectByIndex(index);
-    }
-    //    Parameter1 : WebElement
-//    Parameter2:  String
-//    Driver.selectByIndex(dropdown element, "91303")
-    public static void selectByValue(WebElement element, String value) {
-        Select objSelect = new Select(element);
-        List<WebElement> elementCount = objSelect.getOptions();
-        objSelect.selectByValue(value);
-        System.out.println("number of elements: " + elementCount.size());
-    }
+    public static void quitDriver() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
 
+    }
 
 }

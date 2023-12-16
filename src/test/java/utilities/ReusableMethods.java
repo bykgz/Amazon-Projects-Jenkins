@@ -123,6 +123,8 @@ public class ReusableMethods {
                     "Timeout waiting for Page Load Request to complete after " + timeout + " seconds");
         }
     }
+
+
     //======Fluent Wait====//
     public static WebElement fluentWait(final WebElement webElement, int timeout) {
         //FluentWait<WebDriver> wait = new FluentWait<WebDriver>(Driver.getDriver()).withTimeout(timeinsec, TimeUnit.SECONDS).pollingEvery(timeinsec, TimeUnit.SECONDS);
@@ -136,6 +138,8 @@ public class ReusableMethods {
         });
         return element;
     }
+
+
     /**
      * Performs double click action on an element
      * @param element
@@ -143,6 +147,8 @@ public class ReusableMethods {
     public static void doubleClick(WebElement element) {
         new Actions(Driver.getDriver()).doubleClick(element).build().perform();
     }
+
+
     /**
      * @param element
      * @param check
@@ -158,6 +164,8 @@ public class ReusableMethods {
             }
         }
     }
+
+
     /**
      * Selects a random value from a dropdown list and returns the selected Web Element
      * @param select

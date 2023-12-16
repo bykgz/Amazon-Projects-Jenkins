@@ -101,6 +101,8 @@ public class StepDefinitions {
         Assert.assertTrue(amazon.addToCartAssert.getText().contains("Sepete Eklendi"));
         // test başarılı oldu.
 
+        ReusableMethods.waitFor(3);
+        Driver.closeDriver();
     }
 }
 
