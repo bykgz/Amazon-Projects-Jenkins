@@ -35,8 +35,7 @@ public class StepDefinitions {
     @When("Giris yap sekmesine tiklar")
     public void giris_yap_sekmesine_tiklar() {
         ReusableMethods.waitFor(2);
-        actions.moveToElement(amazon.accountList).perform();
-        amazon.login.click();
+       amazon.accountList.click();
     }
 
     @Then("Gecerli kullanici adini girer")
