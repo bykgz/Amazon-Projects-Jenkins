@@ -6,6 +6,7 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import pages.AmazonPage;
+import utilities.BrowserUtilities;
 import utilities.ConfigurationReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
@@ -28,7 +29,7 @@ public class StepDefinitions {
     @When("Giris yap sekmesine tiklar")
     public void giris_yap_sekmesine_tiklar() {
         ReusableMethods.waitFor(2);
-        amazon.accountList.click();
+        BrowserUtilities.clickWithJS(amazon.accountList);
     }
 
     @Then("Gecerli kullanici adini girer")
