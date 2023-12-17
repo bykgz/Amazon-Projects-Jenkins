@@ -20,7 +20,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.14.1</version>
+            <version>4.15.0</version>
         </dependency>
 
 
@@ -232,7 +232,7 @@
             <plugin>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
-                <version>5.7.5</version>
+                <version>5.7.4</version>
                 <executions>
                     <execution>
                         <id>execution</id>
