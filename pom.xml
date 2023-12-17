@@ -232,7 +232,7 @@
             <plugin>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
-                <version>5.7.4</version>
+                <version>5.7.5</version>
                 <executions>
                     <execution>
                         <id>execution</id>
@@ -241,7 +241,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <projectName>Cucumber-HTML-Raport</projectName>
+                            <projectName>Amazon-Project-Jenkins</projectName>
                             <outputDirectory>${project.build.directory}/cucumber-html-reports</outputDirectory>
                             <!--  <cucumberOutput>${project.build.directory}</cucumberOutput>-->
                             <inputDirectory>${project.build.directory}</inputDirectory>
