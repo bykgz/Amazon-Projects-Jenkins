@@ -29,17 +29,19 @@ public class StepDefinitions {
 
         Driver.getDriver().get(ConfigurationReader.getProperty("amazonUrl"));
         wait.until(ExpectedConditions.visibilityOf(amazon.cookiesAccept));
-
+        ReusableMethods.waitFor(2);
     }
 
     @When("Giris yap sekmesine tiklar")
     public void giris_yap_sekmesine_tiklar() {
+        ReusableMethods.waitFor(2);
         actions.moveToElement(amazon.accountList).perform();
         amazon.login.click();
     }
 
     @Then("Gecerli kullanici adini girer")
     public void gecerli_kullanici_adini_girer() {
+        ReusableMethods.waitFor(2);
         amazon.emailBox.click();
         actions.sendKeys(amazon.emailBox, "mustafa_bykgz@hotmail.com").perform();
 
@@ -47,23 +49,28 @@ public class StepDefinitions {
 
     @Then("Devam et butonuna tiklar")
     public void devam_et_butonuna_tiklar() {
+        ReusableMethods.waitFor(2);
         amazon.submitButton.click();
     }
 
+
+
     @Then("Gecerli password bilgisini girer")
     public void gecerli_password_bilgisini_girer() {
+        ReusableMethods.waitFor(2);
         actions.sendKeys(amazon.passwordBox, "060512020mM").perform();
 
     }
 
     @Then("Giris yap butonuna tiklar")
     public void giris_yap_butonuna_tiklar() {
+        ReusableMethods.waitFor(2);
         amazon.passwordButton.click();
     }
 
     @Then("Kullanici arama kutusuna herhangi bir gecerli veri girisi yapar")
     public void kullanici_arama_kutusuna_herhangi_bir_gecerli_veri_girisi_yapar() {
-
+        ReusableMethods.waitFor(2);
         actions.sendKeys(amazon.searchBox, "Java")
                 .sendKeys(Keys.ENTER).perform();
 
@@ -73,7 +80,7 @@ public class StepDefinitions {
     @Then("Kullanici arama sonuclarini fiyati dusukten yuksege siralar")
     public void kullanici_arama_sonuclarini_fiyati_dusukten_yuksege_siralar() {
 
-
+        ReusableMethods.waitFor(2);
         amazon.getDropDownMenu2.click();
         amazon.lowToHigh.click();
 
@@ -82,7 +89,7 @@ public class StepDefinitions {
 
     @Then("Kullanici fiyati en dusuk olan urune tiklar")
     public void kullanici_fiyati_en_dusuk_olan_urune_tiklar() {
-
+        ReusableMethods.waitFor(2);
         ReusableMethods.waitForVisibility(amazon.product, 5).click();
 
     }
@@ -96,7 +103,7 @@ public class StepDefinitions {
 
     @Then("Kullanici urunun sepete eklendigini dogrular")
     public void kullaniciUrununSepeteEklendiginiDogrular() {
-
+        ReusableMethods.waitFor(2);
 
         Assert.assertTrue(amazon.addToCartAssert.getText().contains("Sepete Eklendi"));
         // test başarılı oldu.
