@@ -17,7 +17,7 @@ public class AmazonPage {
     @FindBy(xpath = "//a[@id= 'nav-link-accountList']")
     public WebElement accountList;
 
-    @FindBy(xpath = "//span[@class= 'nav-action-inner']")
+    @FindBy(css = "#nav-flyout-ya-signin > a >span")
     public WebElement login;
 
     @FindBy(xpath = "//input[@type= \"email\"]")
